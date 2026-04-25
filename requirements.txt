@@ -1,22 +1,24 @@
-# LangChain Core
-langchain
-langchain-core
+# LangChain Core & Community (Explicitly pinned to 0.3.x)
+langchain==0.3.20
+langchain-core==0.3.41
+langchain-community==0.3.19
 
-# OpenAI Integration
-langchain-openai
+# OpenAI Integration (Explicitly pinned to 0.3.x)
+langchain-openai==0.3.5
 openai
 
-# Anthropic Integration
-langchain-anthropic
+# Anthropic Integration (Explicitly pinned to 0.3.x)
+langchain-anthropic==0.3.9
 
 # Google Gemini (PaLM) Integration
 langchain-google-genai
 google-generativeai
 
-# Hugging Face Integration
+# Hugging Face Integration (Typo fixed)
 langchain-huggingface
 transformers
 huggingface-hub
+sentence-transformers
 
 # Environment Variable Management
 python-dotenv
