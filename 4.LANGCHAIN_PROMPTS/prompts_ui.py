@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import streamlit as st
 from langchain_core.prompts import PromptTemplate, load_prompt
 
+#PromptTemplate is used for dynamic prompts (single turn messages)
 load_dotenv()
 
 # how to send dynamic prompts to AI fro single messages

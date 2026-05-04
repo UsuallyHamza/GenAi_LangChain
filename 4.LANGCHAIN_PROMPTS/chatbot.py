@@ -6,7 +6,7 @@ from langchain_core.prompts import PromptTemplate, load_prompt
 load_dotenv()
 
 # how to send list of messages (but static)
-#useful for the chatbots keeping the history of the chat
+#useful for the chatbots keeping the history of the chatm
 
 model = ChatGoogleGenerativeAI(model= 'gemini-3-flash-preview')
 
