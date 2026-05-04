@@ -5,6 +5,8 @@ from langchain_core.prompts import PromptTemplate, load_prompt
 
 load_dotenv()
 
+# how to send dynamic prompts to AI fro single messages
+
 model = ChatGoogleGenerativeAI(model= 'gemini-3-flash-preview')
 
 st.header('Research Tool')

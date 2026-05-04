@@ -5,3 +5,14 @@ from dotenv import load_dotenv
 load_dotenv()
 
 model = ChatGoogleGenerativeAI(model= 'gemini-3-flash-preview')
+
+messages = [
+    SystemMessage(content='You are a helpful assistant'),
+    HumanMessage(content='Tell me about langchain')
+]
+
+result = model.invoke(messages)
+
+messages.append(AIMessage(content= result.content))
+
+print(messages)
