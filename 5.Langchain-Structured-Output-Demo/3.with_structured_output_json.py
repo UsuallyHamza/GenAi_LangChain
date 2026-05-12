@@ -1,6 +1,6 @@
 from langchain_google_genai import ChatGoogleGenerativeAI #always remember ChatGoogleGenerativeAI are chat models while 
 from dotenv import load_dotenv
-from typing import TypedDict, Annotated, Optional, Literal
+from typing import Optional, Literal
 from pydantic import BaseModel, Field
 
 # typeddit is only for representational puporses it does not provide data validation like pydantic
@@ -10,19 +10,52 @@ load_dotenv()
 model = ChatGoogleGenerativeAI(model='gemini-3-flash-preview') 
 
 #schema
-class Review(BaseModel):
-
-    key_themes: list[str] = Field(description= "Write down all the key themes discussed in the review in a list")
-    summary : str = Field(description= "A brief summary of the review")
-    sentiment : Literal["pos", "neg"] = Field(description= "Returned sentiment of the review, either negative, positive or neutral")
-    pros : Optional[list[str]] = Field(default= None, description= "Write down all the pros inside a list")
-    cons : Optional[list[str]] = Field(default= None, description= "Write down all the cons inside a list")
-    name : Optional[str] = Field(description= "Write the name of the reviewer")
+json_schema = {
+  "title": "Review",
+  "type": "object",
+  "properties": {
+    "key_themes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Write down all the key themes discussed in the review in a list"
+    },
+    "summary": {
+      "type": "string",
+      "description": "A brief summary of the review"
+    },
+    "sentiment": {
+      "type": "string",
+      "enum": ["pos", "neg"],
+      "description": "Return sentiment of the review either negative, positive or neutral"
+    },
+    "pros": {
+      "type": ["array", "null"],
+      "items": {
+        "type": "string"
+      },
+      "description": "Write down all the pros inside a list"
+    },
+    "cons": {
+      "type": ["array", "null"],
+      "items": {
+        "type": "string"
+      },
+      "description": "Write down all the cons inside a list"
+    },
+    "name": {
+      "type": ["string", "null"],
+      "description": "Write the name of the reviewer"
+    }
+  },
+  "required": ["key_themes", "summary", "sentiment"]
+}
     
 
 
 #the difference here is simple, we made a class which define the schema of the LLM output and instead of calling the invoke() method on model, we called it on structured_model
-structured_model = model.with_structured_output(Review) # type: ignore
+structured_model = model.with_structured_output(json_schema) # type: ignore
 
 result = structured_model.invoke("""I recently upgraded to the Samsung Galaxy S24 Ultra, and I must say, it’s an absolute powerhouse! The Snapdragon 8 Gen 3 processor makes everything lightning fast—whether I’m gaming, multitasking, or editing photos. The 5000mAh battery easily lasts a full day even with heavy use, and the 45W fast charging is a lifesaver.
 
@@ -42,5 +75,5 @@ Bloatware still exists in One UI
 Expensive compared to competitors""")
 
 print(result)
-print(result.summary)
-print(result.sentiment)
+# print(result.summary)
+# print(result.sentiment)
