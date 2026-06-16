@@ -5,6 +5,7 @@ from langchain_core.output_parsers import JsonOutputParser
 from langchain.output_parsers import StructuredOutputParser, ResponseSchema
 # here we are learning structured output parser
 # diff btw this one and json output parser is simply that in json parser we cant specify schema of json but we can in structured ouput parser
+# downside = no data validation, thats why we use pydantic output parser
 
 load_dotenv()
 
