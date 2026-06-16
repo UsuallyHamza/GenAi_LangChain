@@ -7,7 +7,7 @@ from langchain_core.output_parsers import StrOutputParser
 load_dotenv()
 
 llm = HuggingFaceEndpoint(
-    repo_id = "deepseek-ai/DeepSeek-R1-Distill-Llama-8B",
+    repo_id = "google/gemma-4-26B-A4B-it",
     task= "text-generation"
 
 )
@@ -26,12 +26,10 @@ template2= PromptTemplate(
     input_variables=['text']
 )
 
-prompt1 = template1.invoke({"topic": "balck hole"})
+parser = StrOutputParser()
 
-result = model.invoke(prompt1)
+chain = template1 | model | parser | template2 | model | parser #this is the pipeline or chain or flow
 
-prompt2= template2.invoke({"text": result.content})
+result = chain.invoke({'topic': 'black hole'})
 
-result1 = model.invoke(prompt2)
-
-print(result1.content)
+print(result)
